@@ -1,0 +1,33 @@
+Features:
+
+(Original plan for sole proprietor landlord)
+__________________________________________________________________________________________
+Create owner account
+Create tenant account
+Add Property
+Add expense transaction to property
+document expense transaction
+add revenue transaction to property
+document revenue transaction
+track depreciable base for real property for tax purposes
+track expenses by category as shown on schedule E tax form
+use expense data to automatically fill out schedule E for individual properties
+generate report of all transactions and supporting documentation in case of IRS audit
+Create dashboard tracking metrics as a whole
+Create custom reports with filterable metrics
+Outlier detection to protect against typos (Typos could be very serious in the event that it changes tax amount substantially)
+Easy reconcilliation capabilities (Check vs entered amount and documentation interface should hopefully bring up
+    transaction and supporting documentation at once so for each document there is only one click)
+Repair request
+Pay rent(Maybe)
+Generate receipt for rent(Definitely)
+
+
+(Maybe later for property management company)
+________________________________________________________________________________________________
+Create account with employee role
+
+
+
+Further research will be required to generate features once I have a better understanding of the requirements of Broker in Charge in respect to the
+supervision of other brokers and non-licensed employees.
