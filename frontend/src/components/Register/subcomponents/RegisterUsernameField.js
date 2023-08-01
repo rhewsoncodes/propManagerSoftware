@@ -29,6 +29,7 @@ const RegisterUsernameField = ({
           className={validUsername || !username ? "hide" : "invalid"}
         />
       </label>
+
       <input
         type="text"
         id="username"
@@ -41,6 +42,7 @@ const RegisterUsernameField = ({
         onFocus={() => setUsernameFocus(true)}
         onBlur={() => setUsernameFocus(false)}
       />
+
       <p
         id="uidnote"
         className={

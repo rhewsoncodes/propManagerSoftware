@@ -33,6 +33,7 @@ const RegisterEmailField = ({
       {/*Because the @ and . are normally towards the end 
       of the email i am not going to harrass them with the 
   X mark until they enter it*/}
+
       <input
         type="text"
         id="email"
@@ -43,6 +44,7 @@ const RegisterEmailField = ({
         onFocus={() => setEmailFocus(true)}
         onBlur={() => setEmailFocus(false)}
       />
+
       <p
         id="emailnote"
         className={

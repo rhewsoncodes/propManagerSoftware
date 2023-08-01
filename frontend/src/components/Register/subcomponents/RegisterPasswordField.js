@@ -27,6 +27,7 @@ const RegisterPasswordField = ({
           className={validPassword || !password ? "hide" : "invalid"}
         />
       </label>
+
       <input
         type="password"
         id="password"
@@ -37,6 +38,7 @@ const RegisterPasswordField = ({
         onFocus={() => setPasswordFocus(true)}
         onBlur={() => setPasswordFocus(false)}
       />
+
       <p
         id="pwdnote"
         className={

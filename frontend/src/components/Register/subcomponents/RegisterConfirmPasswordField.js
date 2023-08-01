@@ -29,6 +29,7 @@ const RegisterConfirmPasswordField = ({
           }
         />
       </label>
+
       <input
         type="password"
         id="confirm_password"
@@ -39,6 +40,7 @@ const RegisterConfirmPasswordField = ({
         onFocus={() => setConfirmPasswordFocus(true)}
         onBlur={() => setConfirmPasswordFocus(false)}
       />
+
       <p
         id="confirmnote"
         className={

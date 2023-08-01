@@ -27,6 +27,7 @@ const RegisterConfirmEmailField = ({
           className={confirmEmailMatch || !confirmEmail ? "hide" : "invalid"}
         />
       </label>
+
       <input
         type="text"
         id="confirm_email"
@@ -37,6 +38,7 @@ const RegisterConfirmEmailField = ({
         onFocus={() => setConfirmEmailFocus(true)}
         onBlur={() => setConfirmEmailFocus(false)}
       />
+
       <p
         id="confirm-email-note"
         className={
