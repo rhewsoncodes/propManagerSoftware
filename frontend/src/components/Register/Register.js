@@ -32,7 +32,7 @@ Password is of length 8-24 and contains
 
 the password also only contains special characters !@#$%
 */
-const PWD_REGEX = /(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])[a-zA-Z0-9!@#$%].{7,23}/;
+const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])[a-zA-Z0-9!@#$%].{7,23}/;
 
 /*
 Makes sure email has a @ and that there is no funky stuff in there that shouldnt be
@@ -118,6 +118,7 @@ const Register = () => {
         {error}
       </p>
       <h1>Register Account</h1>
+
       <form>
         <RegisterUsernameField
           username={username}
@@ -165,6 +166,7 @@ const Register = () => {
           setFirstName={setFirstName}
         />
         <RegisterLastNameField lastName={lastName} setLastName={setLastName} />
+
         <button
           disabled={
             !validUsername ||
