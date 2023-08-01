@@ -1,0 +1,21 @@
+import logo from "./logo.svg";
+import "./App.css";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Login from "./components/Login";
+import Register from "./components/Register/Register";
+
+function App() {
+  return (
+    <div className="App">
+      <BrowserRouter>
+        <div className="content">
+          <Routes>
+            <Route path="/create-account" element={<Register />} />
+          </Routes>
+        </div>
+      </BrowserRouter>
+    </div>
+  );
+}
+
+export default App;
