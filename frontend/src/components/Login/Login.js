@@ -1,9 +1,11 @@
 import React from "react";
 import { useRef, useState, useEffect, useContext } from "react";
+import AuthContext from "../../context/AuthProvider";
 import AccountService from "../../services/AccountService";
 import "./login.css";
 
 const Login = () => {
+  const { setAuth } = useContext(AuthContext);
   const userRef = useRef();
   const errRef = useRef();
 
@@ -30,14 +32,18 @@ const Login = () => {
       const signInRequest = { username, password };
       const response = await AccountService.post(
         "auth/authenticate",
-        signInRequest
+        signInRequest,
+        {
+          withCredentials: true,
+        }
       );
+      const accessToken = response?.data?.token;
       setUsername("");
       setPassword("");
       setSuccess(true);
       console.log(response);
       console.log(response?.data);
-      console.log(response?.accessToken);
+      console.log(response?.data?.token);
       console.log(JSON.stringify(response));
     } catch (err) {
       setError(err);
