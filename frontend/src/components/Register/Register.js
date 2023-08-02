@@ -15,6 +15,8 @@ import EmailField from "./subcomponents/RegisterEmailField";
 import RegisterConfirmEmailField from "./subcomponents/RegisterConfirmEmailField";
 import RegisterFirstNameField from "./subcomponents/RegisterFirstNameField";
 import RegisterLastNameField from "./subcomponents/RegisterLastNameField";
+import RegisterAccountTypeSelect from "./subcomponents/RegisterAccountTypeSelect";
+import "./register.css";
 
 /*
 Username is of length 6-23 and contains
@@ -22,7 +24,7 @@ only
 
 */
 
-const USER_REGEX = /^[a-zA-Z][a-zA-Z0-9-_].{5,23}$/;
+const USER_REGEX = /^[a-zA-Z][a-zA-Z0-9-_].{4,23}$/;
 
 /*
 Password is of length 8-24 and contains 
@@ -74,8 +76,12 @@ const Register = () => {
   //States for last name
   const [lastName, setLastName] = useState("");
 
+  //States for Account Type
+  const [accountType, setAccountType] = useState("manager");
+  const [accountTypeFocus, setAccountTypeFocus] = useState(false);
+
   //States for error field
-  const [error, setError] = useState("");
+  const [error, setError] = useState(null);
   const [success, setSuccess] = useState(false);
 
   useEffect(() => {
@@ -108,82 +114,152 @@ const Register = () => {
     setError("");
   }, [username, password, confirmPassword, email, confirmEmail]);
 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    {
+      /*Completely un-necessary double check of regex to show people we arent screwing around. */
+    }
+    const userRegCheck = USER_REGEX.test(username);
+    const passRegCheck = PWD_REGEX.test(password);
+    const emailRegCheck = EMAIL_REGEX.test(email);
+
+    if (!userRegCheck || !passRegCheck || !emailRegCheck) {
+      setError("Invalid Entry");
+      return;
+    }
+
+    const createAccountRequest = {
+      username,
+      password,
+      email,
+      firstName,
+      lastName,
+      accountType,
+    };
+    try {
+      const response = await AccountService.post(
+        "auth/createAccount",
+        JSON.stringify(createAccountRequest)
+      );
+      console.log(response);
+      console.log(response?.data);
+      console.log(response?.accessToken);
+      console.log(JSON.stringify(response));
+      setSuccess(true);
+      setUsername("");
+      setPassword("");
+      setConfirmPassword("");
+      setEmail("");
+      setConfirmEmail("");
+      setFirstName("");
+      setLastName("");
+    } catch (err) {
+      console.log(err);
+      if (!err?.response) {
+        setError("No Server Response");
+      } else if (err.response?.status === 409) {
+        setError("Username or Email taken");
+      } else {
+        setError("Registration failed.");
+      }
+      errRef.current.focus();
+    }
+  };
+
   return (
-    <section>
-      <p
-        ref={errRef}
-        className={error ? "errmsg" : "offscreen"}
-        aria-live="assertive"
-      >
-        {error}
-      </p>
-      <h1>Register Account</h1>
+    <>
+      {success ? (
+        <section>
+          <h1>Success!</h1>
+          <p>
+            <a href="/Home">Home</a>
+          </p>
+        </section>
+      ) : (
+        <section>
+          <p
+            ref={errRef}
+            className={error ? "errmsg" : "offscreen"}
+            aria-live="assertive"
+          >
+            {error}
+          </p>
+          <h1>Register Account</h1>
 
-      <form>
-        <RegisterUsernameField
-          username={username}
-          setUsername={setUsername}
-          validUsername={validUsername}
-          setValidUsername={setValidUsername}
-          usernameFocus={usernameFocus}
-          setUsernameFocus={setUsernameFocus}
-          userRef={userRef}
-        />
-        <RegisterPasswordField
-          password={password}
-          setPassword={setPassword}
-          validPassword={validPassword}
-          setValidPassword={setValidPassword}
-          passwordFocus={passwordFocus}
-          setPasswordFocus={setPasswordFocus}
-        />
-        <RegisterConfirmPasswordField
-          confirmPassword={confirmPassword}
-          setConfirmPassword={setConfirmPassword}
-          confirmPasswordMatch={confirmPasswordMatch}
-          setConfirmPasswordMatch={setConfirmPasswordMatch}
-          confirmPasswordFocus={confirmPasswordFocus}
-          setConfirmPasswordFocus={setConfirmPasswordFocus}
-        />
-        <EmailField
-          email={email}
-          setEmail={setEmail}
-          validEmail={validEmail}
-          setValidEmail={setValidEmail}
-          emailFocus={emailFocus}
-          setEmailFocus={setEmailFocus}
-        />
-        <RegisterConfirmEmailField
-          confirmEmail={confirmEmail}
-          setConfirmEmail={setConfirmEmail}
-          confirmEmailMatch={confirmEmailMatch}
-          setConfirmEmailMatch={setConfirmEmailMatch}
-          confirmEmailFocus={confirmEmailFocus}
-          setConfirmEmailFocus={setConfirmEmailFocus}
-        />
-        <RegisterFirstNameField
-          firstName={firstName}
-          setFirstName={setFirstName}
-        />
-        <RegisterLastNameField lastName={lastName} setLastName={setLastName} />
+          <form onSubmit={handleSubmit}>
+            <RegisterUsernameField
+              username={username}
+              setUsername={setUsername}
+              validUsername={validUsername}
+              setValidUsername={setValidUsername}
+              usernameFocus={usernameFocus}
+              setUsernameFocus={setUsernameFocus}
+              userRef={userRef}
+            />
+            <RegisterPasswordField
+              password={password}
+              setPassword={setPassword}
+              validPassword={validPassword}
+              setValidPassword={setValidPassword}
+              passwordFocus={passwordFocus}
+              setPasswordFocus={setPasswordFocus}
+            />
+            <RegisterConfirmPasswordField
+              confirmPassword={confirmPassword}
+              setConfirmPassword={setConfirmPassword}
+              confirmPasswordMatch={confirmPasswordMatch}
+              setConfirmPasswordMatch={setConfirmPasswordMatch}
+              confirmPasswordFocus={confirmPasswordFocus}
+              setConfirmPasswordFocus={setConfirmPasswordFocus}
+            />
+            <EmailField
+              email={email}
+              setEmail={setEmail}
+              validEmail={validEmail}
+              setValidEmail={setValidEmail}
+              emailFocus={emailFocus}
+              setEmailFocus={setEmailFocus}
+            />
+            <RegisterConfirmEmailField
+              confirmEmail={confirmEmail}
+              setConfirmEmail={setConfirmEmail}
+              confirmEmailMatch={confirmEmailMatch}
+              setConfirmEmailMatch={setConfirmEmailMatch}
+              confirmEmailFocus={confirmEmailFocus}
+              setConfirmEmailFocus={setConfirmEmailFocus}
+            />
+            <RegisterFirstNameField
+              firstName={firstName}
+              setFirstName={setFirstName}
+            />
+            <RegisterLastNameField
+              lastName={lastName}
+              setLastName={setLastName}
+            />
+            <RegisterAccountTypeSelect
+              accountType={accountType}
+              setAccountType={setAccountType}
+            />
 
-        <button
-          disabled={
-            !validUsername ||
-            !validPassword ||
-            !confirmPasswordMatch ||
-            !validEmail ||
-            !confirmEmailMatch ||
-            !firstName ||
-            !lastName
-              ? true
-              : false
-          }
-        >
-          Sign up
-        </button>
-      </form>
-    </section>
+            <button
+              disabled={
+                !validUsername ||
+                !validPassword ||
+                !confirmPasswordMatch ||
+                !validEmail ||
+                !confirmEmailMatch ||
+                !firstName ||
+                !lastName
+                  ? true
+                  : false
+              }
+            >
+              Sign up
+            </button>
+          </form>
+        </section>
+      )}
+    </>
   );
 };
 
