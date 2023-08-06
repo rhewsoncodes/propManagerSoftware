@@ -26,7 +26,9 @@ public class AccountEntity implements UserDetails {
     @GeneratedValue(strategy = GenerationType.UUID)
     @UuidGenerator
     private UUID uuid;
-    private String username, password, email, firstName, lastName, accountType;
+    private String username, password, email, firstName, lastName, accountType, refreshToken;
+    private UUID managerId;
+    private boolean enabled;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

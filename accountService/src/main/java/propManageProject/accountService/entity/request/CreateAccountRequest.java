@@ -4,5 +4,5 @@ import lombok.Data;
 
 @Data
 public class CreateAccountRequest {
-    private String username, password, email, firstName, lastName, accountType;
+    private String accountType, email, firstName, lastName, password, username;
 }
