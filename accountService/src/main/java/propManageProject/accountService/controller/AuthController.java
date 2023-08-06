@@ -15,6 +15,7 @@ import propManageProject.accountService.logic.AccountService;
 @RestController
 @AllArgsConstructor
 @RequestMapping("/auth")
+@CrossOrigin
 public class AuthController {
     @Autowired
     private AccountService accountService;
