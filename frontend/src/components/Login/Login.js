@@ -1,13 +1,18 @@
 import React from "react";
-import { useRef, useState, useEffect, useContext } from "react";
-import AuthContext from "../../context/AuthProvider";
+import { useRef, useState, useEffect } from "react";
 import AccountService from "../../services/AccountService";
+import useAuth from "../../hooks/useAuth";
 import "./login.css";
+import { useNavigate, useLocation, Link } from "react-router-dom";
 
 const Login = () => {
-  const { setAuth } = useContext(AuthContext);
+  const { setAuth } = useAuth();
   const userRef = useRef();
   const errRef = useRef();
+
+  const navigate = useNavigate();
+  const location = useLocation();
+  const from = location.state?.from?.pathname || "/";
 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -37,16 +42,29 @@ const Login = () => {
           withCredentials: true,
         }
       );
-      const accessToken = response?.data?.token;
+      const accessToken = response?.data?.accessToken;
+      const role = response?.data?.role;
+      const loggedInUserId = response?.data?.user_id;
+      setAuth({ role, accessToken, loggedInUserId });
+      console.log("SETTING AUTH WITH ", {
+        role,
+        accessToken,
+        loggedInUserId,
+      });
       setUsername("");
       setPassword("");
-      setSuccess(true);
-      console.log(response);
-      console.log(response?.data);
-      console.log(response?.data?.token);
-      console.log(JSON.stringify(response));
+      navigate(from, { replace: true });
     } catch (err) {
-      setError(err);
+      if (!err?.response) {
+        setError("No Server Response");
+      } else if (err.response?.status === 400) {
+        setError("Missing Username or Password");
+      } else if (err.response?.status === 401) {
+        setError("Incorrect Username or Password");
+      } else {
+        setError("Login Failed.");
+      }
+      errRef.current.focus();
     }
   };
   return (

@@ -53,9 +53,10 @@ const RegisterUsernameField = ({
       >
         <FontAwesomeIcon icon={faInfoCircle} />
         6 to 24 characters. <br />
-        The username must begin with a letter.
+        Username must begin with a letter.
         <br />
-        Letters, numbers, underscore, and hyphens are allowed.
+        Letters, numbers, underscore, and hyphens <br />
+        are allowed.
       </p>
     </>
   );

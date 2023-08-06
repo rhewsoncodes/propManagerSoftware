@@ -47,7 +47,8 @@ const RegisterPasswordField = ({
       >
         <FontAwesomeIcon icon={faInfoCircle} />
         8 to 24 characters. <br />
-        Must include uppercase and lowercase letters and a number.
+        Must include an uppercase and a <br />
+        lowercase letters and a number.
         <br />
         Allowed special characters:
         <span aria-label="exclamation mark">!</span>

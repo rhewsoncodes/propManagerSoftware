@@ -7,7 +7,7 @@ import java.util.UUID;
 
 @Data
 public class CreateClientRequest {
-    private String email, firstName, lastName;
+    private String email, firstName, lastName, accountType;
     private UUID managerId;
     private Date dob;
 }

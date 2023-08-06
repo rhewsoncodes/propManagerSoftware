@@ -38,7 +38,7 @@ public class ClientService {
                         .email(request.getEmail())
                         .firstName(request.getFirstName())
                         .lastName(request.getLastName())
-                        .accountType("Owner")
+                        .accountType(request.getAccountType())
                         .managerId(request.getManagerId())
                         .build();
                 accountRepository.save(user);
