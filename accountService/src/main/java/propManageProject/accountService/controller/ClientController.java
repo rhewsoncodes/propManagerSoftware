@@ -1,13 +1,10 @@
 package propManageProject.accountService.controller;
 
 
-import jakarta.persistence.GeneratedValue;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import propManageProject.accountService.entity.AccountEntity;
 import propManageProject.accountService.entity.request.clients.CreateClientRequest;
-import propManageProject.accountService.entity.request.clients.GetClientsRequest;
 import propManageProject.accountService.entity.response.clients.GetClientsResponse;
 import propManageProject.accountService.logic.ClientService;
 
@@ -24,8 +21,13 @@ public class ClientController {
         return clientService.createClientAccount(request);
     }
 
-    @PostMapping("/get-clients")
-    public ResponseEntity<GetClientsResponse> getClients(@RequestBody GetClientsRequest request){
-        return clientService.getClientsByManagerId(request.getManagerId());
+    @GetMapping("/get-owners/{managerId}")
+    public ResponseEntity<GetClientsResponse> getOwners(@PathVariable("managerId") String managerId){
+        return clientService.getOwnersByManagerId(managerId);
+    }
+
+    @GetMapping("/get-tenants/{managerId}")
+    public ResponseEntity<GetClientsResponse> getTenants(@PathVariable("managerId") String managerId){
+        return clientService.getTenantsByManagerId(managerId);
     }
 }

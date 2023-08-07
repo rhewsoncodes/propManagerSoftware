@@ -47,6 +47,7 @@ public class ClientService {
                     username = username + Integer.toString(i);
                     uniqueUsername = accountRepository.findAccountByUsername(username).isEmpty();
                 }
+                username.replace(" ","_");
                 AccountEntity user = AccountEntity.builder().username(username)
                         .password(password)
                         .email(request.getEmail())
@@ -75,12 +76,19 @@ public class ClientService {
     }
 
 
-    public ResponseEntity<GetClientsResponse> getClientsByManagerId (String managerId){
-        System.out.println("FORBIDDEN MY ASS NUMERO DOS");
+    public ResponseEntity<GetClientsResponse> getOwnersByManagerId (String managerId){
         UUID managerUUID = UUID.fromString(managerId);
-        AccountEntity[] clients = accountRepository.findAllByManagerId(managerUUID);
-        GetClientsResponse request = GetClientsResponse.builder().accounts(clients).build();
-        return ResponseEntity.ok(request);
+        AccountEntity[] clients = accountRepository.findAllByManagerIdAndAccountType(managerUUID, "Owner");
+        GetClientsResponse response = GetClientsResponse.builder().accounts(clients).build();
+        return ResponseEntity.ok(response);
     }
+
+    public ResponseEntity<GetClientsResponse> getTenantsByManagerId(String managerId) {
+        UUID managerUUID = UUID.fromString(managerId);
+        AccountEntity[] clients = accountRepository.findAllByManagerIdAndAccountType(managerUUID, "Tenant");
+        GetClientsResponse response = GetClientsResponse.builder().accounts(clients).build();
+        return ResponseEntity.ok(response);
+    }
+
 
 }

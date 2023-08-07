@@ -112,7 +112,6 @@ public class AccountService {
     ) {
         final String username;
         username = jwtService.extractUsername(refreshToken);
-        System.out.println(username);
         if (username != null) {
             var userDetails = accountRepository.findAccountByUsername(username).orElseThrow();
             if (jwtService.isTokenValid(refreshToken, userDetails)) {
@@ -125,7 +124,6 @@ public class AccountService {
                 return ResponseEntity.ok().header(HttpHeaders.SET_COOKIE, refreshToken).body(authenticationResponse);
             }
         }
-        System.out.println("PROBLEM IS HERE");
         return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
 
     }
