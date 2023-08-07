@@ -3,8 +3,8 @@ import useAccountServicePrivate from "../../hooks/useAccountServicePrivate";
 import { useState, useEffect } from "react";
 import useAuth from "../../hooks/useAuth";
 
-const ClientList = () => {
-  const [data, setData] = useState(null);
+const ClientList = ({ type }) => {
+  const [data, setData] = useState([]);
 
   const { auth } = useAuth();
 
@@ -14,17 +14,29 @@ const ClientList = () => {
 
   const getClientsRequest = { managerId };
 
-  useEffect(() => {
-    const response = accountServicePrivate.post(
-      "client/get-clients",
+  const grabData = async () => {
+    const response = await accountServicePrivate.get(
+      `client/get-${type}/${managerId}`,
       getClientsRequest
     );
     console.log(response);
-    console.log(response?.clients);
-    setData(response.clients);
+    console.log(response?.data?.accounts);
+    setData(response.data.accounts);
+  };
+
+  useEffect(() => {
+    grabData();
   }, []);
 
-  return <h2>{data}</h2>;
+  return (
+    <>
+      <ul>
+        {data.map((account) => (
+          <li>{account.username}</li>
+        ))}
+      </ul>
+    </>
+  );
 };
 
 export default ClientList;

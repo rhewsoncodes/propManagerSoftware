@@ -1,6 +1,5 @@
-import logo from "./logo.svg";
 import "./App.css";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import Login from "./components/Login/Login";
 import Register from "./components/Register/Register";
 import ManagerHome from "./components/ManagerHome/ManagerHome";
@@ -22,7 +21,11 @@ function App() {
         <Route element={<RequireAuth allowedRole="manager" />}>
           <Route path="/" element={<ManagerHome />} />
           <Route path="/create-client" element={<CreateClientForm />} />
-          <Route path="/list-clients" element={<ClientList />} />
+          <Route path="/list-owners" element={<ClientList type={"owners"} />} />
+          <Route
+            path="/list-tenants"
+            element={<ClientList type={"tenants"} />}
+          />
         </Route>
 
         <Route path="*" element={<NotFound />} />
