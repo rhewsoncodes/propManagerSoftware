@@ -1,7 +1,6 @@
 package propManagementProject.emailService.emailService.controller;
 
 import lombok.AllArgsConstructor;
-import org.apache.coyote.Response;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -24,16 +23,6 @@ public class EmailController {
             return ResponseEntity.ok("Email sent.");
         }
         catch(Exception e){
-            return ResponseEntity.internalServerError().body(e.getMessage());
-        }
-    }
-
-    @PostMapping("/sendAttachment")
-    public ResponseEntity<String> sendEmailWithAttachment(@RequestBody SendAttachmentEmailRequest request) {
-        try {
-            emailLogic.sendAttachmentMessage(request);
-            return ResponseEntity.ok("Email sent.");
-        } catch (Exception e) {
             return ResponseEntity.internalServerError().body(e.getMessage());
         }
     }

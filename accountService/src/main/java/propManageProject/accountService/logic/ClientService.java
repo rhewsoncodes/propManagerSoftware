@@ -1,21 +1,34 @@
 package propManageProject.accountService.logic;
 
-import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 import propManageProject.accountService.entity.AccountEntity;
-import propManageProject.accountService.entity.request.CreateClientRequest;
+import propManageProject.accountService.entity.request.clients.CreateClientRequest;
+import propManageProject.accountService.entity.request.emails.SendEmailRequest;
+import propManageProject.accountService.entity.response.clients.GetClientsResponse;
 import propManageProject.accountService.repository.AccountRepository;
+
 import java.util.UUID;
 
 @Service
-@AllArgsConstructor
 public class ClientService {
 
-    private final AccountRepository accountRepository;
-    private final PasswordEncoder passwordEncoder;
+    @Autowired
+    private AccountRepository accountRepository;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private RestTemplate restTemplate;
+
+    @Value("${emailservice.url}")
+    private String emailServiceUrl;
 
     public ResponseEntity<String> createClientAccount(
             CreateClientRequest request
@@ -23,6 +36,7 @@ public class ClientService {
         try {
             String username = request.getFirstName().charAt(0) + request.getLastName();
             String password = Integer.toString(request.getDob().getMonth()) + request.getLastName() + Integer.toString(request.getDob().getYear());
+            password = password.replace(" ","_");
             String encodedPassword = passwordEncoder.encode(password);
             boolean uniqueEmail = accountRepository.findAccountByEmail(request.getEmail()).isEmpty();
 
@@ -42,6 +56,13 @@ public class ClientService {
                         .managerId(request.getManagerId())
                         .build();
                 accountRepository.save(user);
+
+                SendEmailRequest sendEmailRequest = SendEmailRequest.builder().subject("Your account has been created")
+                        .body("Your username is " + username + "Your password is" + password)
+                        .recipient(request.getEmail())
+                                .build();
+
+                restTemplate.postForObject(emailServiceUrl + "send", sendEmailRequest, String.class);
                 return ResponseEntity.status(HttpStatus.CREATED).body("Client account created");
 
             } else {
@@ -52,4 +73,14 @@ public class ClientService {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
+
+
+    public ResponseEntity<GetClientsResponse> getClientsByManagerId (String managerId){
+        System.out.println("FORBIDDEN MY ASS NUMERO DOS");
+        UUID managerUUID = UUID.fromString(managerId);
+        AccountEntity[] clients = accountRepository.findAllByManagerId(managerUUID);
+        GetClientsResponse request = GetClientsResponse.builder().accounts(clients).build();
+        return ResponseEntity.ok(request);
+    }
+
 }

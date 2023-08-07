@@ -14,9 +14,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import propManageProject.accountService.entity.AccountEntity;
-import propManageProject.accountService.entity.request.AuthenticationRequest;
-import propManageProject.accountService.entity.request.CreateAccountRequest;
-import propManageProject.accountService.entity.response.AuthenticationResponse;
+import propManageProject.accountService.entity.request.authentication.AuthenticationRequest;
+import propManageProject.accountService.entity.request.authentication.CreateAccountRequest;
+import propManageProject.accountService.entity.response.authentication.AuthenticationResponse;
 import propManageProject.accountService.repository.AccountRepository;
 
 

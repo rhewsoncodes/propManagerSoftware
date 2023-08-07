@@ -1,4 +1,4 @@
-package propManagementProject.emailService.emailService.entity.request;
+package propManageProject.accountService.entity.request.emails;
 
 import lombok.Builder;
 import lombok.Data;

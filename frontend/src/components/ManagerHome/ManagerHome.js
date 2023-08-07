@@ -8,6 +8,7 @@ const ManagerHome = () => {
     <div>
       Hello {auth.username}
       <Link to="/create-client">Create Client</Link>
+      <Link to="/list-clients">Client List</Link>
     </div>
   );
 };

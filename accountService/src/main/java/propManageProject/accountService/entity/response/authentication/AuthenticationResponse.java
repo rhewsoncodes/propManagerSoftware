@@ -1,4 +1,4 @@
-package propManageProject.accountService.entity.response;
+package propManageProject.accountService.entity.response.authentication;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

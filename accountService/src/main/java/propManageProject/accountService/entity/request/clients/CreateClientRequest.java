@@ -1,4 +1,4 @@
-package propManageProject.accountService.entity.request;
+package propManageProject.accountService.entity.request.clients;
 
 import lombok.Data;
 

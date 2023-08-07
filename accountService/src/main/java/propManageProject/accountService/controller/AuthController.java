@@ -6,9 +6,9 @@ import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import propManageProject.accountService.entity.request.AuthenticationRequest;
-import propManageProject.accountService.entity.request.CreateAccountRequest;
-import propManageProject.accountService.entity.response.AuthenticationResponse;
+import propManageProject.accountService.entity.request.authentication.AuthenticationRequest;
+import propManageProject.accountService.entity.request.authentication.CreateAccountRequest;
+import propManageProject.accountService.entity.response.authentication.AuthenticationResponse;
 import propManageProject.accountService.logic.AccountService;
 
 

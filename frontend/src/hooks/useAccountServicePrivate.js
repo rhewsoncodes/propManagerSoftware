@@ -24,10 +24,8 @@ const useAccountServicePrivate = () => {
       async (error) => {
         const prevRequest = error?.config;
         if (error?.response?.status === 403 && !prevRequest?.sent) {
-          console.log("aaaaaaaa");
           prevRequest.sent = true;
           const newAccessToken = await refresh();
-          console.log(newAccessToken);
           prevRequest.headers["Authorization"] = `Bearer ${newAccessToken}`;
           return AccountServicePrivate(prevRequest);
         } else {
