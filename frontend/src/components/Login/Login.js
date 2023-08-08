@@ -45,6 +45,9 @@ const Login = () => {
       const accessToken = response?.data?.accessToken;
       const role = response?.data?.role;
       const loggedInUserId = response?.data?.user_id;
+      if (accessToken) {
+        localStorage.setItem("accessToken", accessToken);
+      }
       setAuth({ role, accessToken, loggedInUserId });
       console.log("SETTING AUTH WITH ", {
         role,

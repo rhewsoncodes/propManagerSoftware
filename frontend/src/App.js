@@ -18,7 +18,7 @@ function App() {
         <Route path="register" element={<Register />} />
         <Route path="unauthorized" element={<Unauthorized />} />
 
-        <Route element={<RequireAuth allowedRole="manager" />}>
+        <Route element={<RequireAuth allowedRole="Manager" />}>
           <Route path="/" element={<ManagerHome />} />
           <Route path="/create-client" element={<CreateClientForm />} />
           <Route path="/list-owners" element={<ClientList type={"owners"} />} />

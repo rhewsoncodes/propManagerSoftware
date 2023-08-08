@@ -130,7 +130,7 @@ const Register = () => {
       email,
       firstName,
       lastName,
-      accountType: "Manager",
+      accountType: "manager",
     };
     try {
       const response = await AccountService.post(
