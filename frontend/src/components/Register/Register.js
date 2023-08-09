@@ -1,15 +1,18 @@
 import AccountService from "../../services/AccountService";
 
+import { useNavigate } from "react-router-dom";
 import { useRef, useState, useEffect } from "react";
 
-import RegisterConfirmPasswordField from "./subcomponents/RegisterConfirmPasswordField";
-import RegisterPasswordField from "./subcomponents/RegisterPasswordField";
-import RegisterUsernameField from "./subcomponents/RegisterUsernameField";
-import EmailField from "./subcomponents/RegisterEmailField";
-import RegisterConfirmEmailField from "./subcomponents/RegisterConfirmEmailField";
-import RegisterFirstNameField from "./subcomponents/RegisterFirstNameField";
-import RegisterLastNameField from "./subcomponents/RegisterLastNameField";
 import "./register.css";
+import FirstNameFormField from "../SubComponents/FormFields/FirstNameFormField";
+import LastNameFormField from "../SubComponents/FormFields/LastNameFormField";
+import UsernameFormField from "../SubComponents/FormFields/UsernameFormField";
+import PasswordFormField from "../SubComponents/FormFields/PasswordFormField";
+import ConfirmPasswordFormField from "../SubComponents/FormFields/ConfirmPasswordFormField";
+import EmailFormField from "../SubComponents/FormFields/EmailFormField";
+import ConfirmEmailFormField from "../SubComponents/FormFields/ConfirmEmailFormField";
+import PhoneNumberField from "../SubComponents/FormFields/PhoneNumberField";
+import DateOfBirthFormField from "../SubComponents/FormFields/DateOfBirthFormField";
 
 /*
 Username is of length 6-23 and contains
@@ -38,6 +41,8 @@ const EMAIL_REGEX = /(?=.*@)(?=.*\.)[a-zA-Z0-9@.]{3,}/;
 const Register = () => {
   const userRef = useRef();
   const errRef = useRef();
+
+  const navigate = useNavigate();
 
   //States for username field
   const [username, setUsername] = useState("");
@@ -68,6 +73,10 @@ const Register = () => {
   const [firstName, setFirstName] = useState("");
   //States for last name
   const [lastName, setLastName] = useState("");
+
+  const [dob, setDob] = useState("");
+
+  const [phoneNumber, setPhoneNumber] = useState("");
 
   //States for error field
   const [error, setError] = useState(null);
@@ -148,6 +157,7 @@ const Register = () => {
       setConfirmEmail("");
       setFirstName("");
       setLastName("");
+      navigate("/");
     } catch (err) {
       console.log(err);
       if (!err?.response) {
@@ -174,7 +184,7 @@ const Register = () => {
         <h1>Register Account</h1>
 
         <form onSubmit={handleSubmit}>
-          <RegisterUsernameField
+          <UsernameFormField
             username={username}
             setUsername={setUsername}
             validUsername={validUsername}
@@ -183,7 +193,7 @@ const Register = () => {
             setUsernameFocus={setUsernameFocus}
             userRef={userRef}
           />
-          <RegisterPasswordField
+          <PasswordFormField
             password={password}
             setPassword={setPassword}
             validPassword={validPassword}
@@ -191,7 +201,7 @@ const Register = () => {
             passwordFocus={passwordFocus}
             setPasswordFocus={setPasswordFocus}
           />
-          <RegisterConfirmPasswordField
+          <ConfirmPasswordFormField
             confirmPassword={confirmPassword}
             setConfirmPassword={setConfirmPassword}
             confirmPasswordMatch={confirmPasswordMatch}
@@ -199,7 +209,7 @@ const Register = () => {
             confirmPasswordFocus={confirmPasswordFocus}
             setConfirmPasswordFocus={setConfirmPasswordFocus}
           />
-          <EmailField
+          <EmailFormField
             email={email}
             setEmail={setEmail}
             validEmail={validEmail}
@@ -207,7 +217,7 @@ const Register = () => {
             emailFocus={emailFocus}
             setEmailFocus={setEmailFocus}
           />
-          <RegisterConfirmEmailField
+          <ConfirmEmailFormField
             confirmEmail={confirmEmail}
             setConfirmEmail={setConfirmEmail}
             confirmEmailMatch={confirmEmailMatch}
@@ -215,13 +225,15 @@ const Register = () => {
             confirmEmailFocus={confirmEmailFocus}
             setConfirmEmailFocus={setConfirmEmailFocus}
           />
-          <RegisterFirstNameField
+          <FirstNameFormField
             firstName={firstName}
             setFirstName={setFirstName}
           />
-          <RegisterLastNameField
-            lastName={lastName}
-            setLastName={setLastName}
+          <LastNameFormField lastName={lastName} setLastName={setLastName} />
+          <DateOfBirthFormField dob={dob} setDob={setDob} />
+          <PhoneNumberField
+            phoneNumber={phoneNumber}
+            setPhoneNumber={setPhoneNumber}
           />
 
           <button

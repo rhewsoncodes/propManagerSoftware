@@ -1,6 +1,7 @@
 import React from "react";
+import { useEffect } from "react";
 
-const CreateClientDateOfBirthField = ({ dob, setDob }) => {
+const DateOfBirthFormField = ({ dob, setDob }) => {
   return (
     <>
       <label for="dob">Date of Birth:</label>
@@ -14,4 +15,4 @@ const CreateClientDateOfBirthField = ({ dob, setDob }) => {
   );
 };
 
-export default CreateClientDateOfBirthField;
+export default DateOfBirthFormField;

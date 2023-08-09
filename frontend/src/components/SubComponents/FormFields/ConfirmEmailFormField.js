@@ -6,7 +6,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-const RegisterConfirmEmailField = ({
+const ConfirmEmailFormField = ({
   confirmEmail,
   setConfirmEmail,
   confirmEmailMatch,
@@ -54,4 +54,4 @@ const RegisterConfirmEmailField = ({
   );
 };
 
-export default RegisterConfirmEmailField;
+export default ConfirmEmailFormField;

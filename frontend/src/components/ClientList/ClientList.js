@@ -32,7 +32,9 @@ const ClientList = ({ type }) => {
     <>
       <ul>
         {data.map((account) => (
-          <li>{account.username}</li>
+          <li>
+            {account.firstName} {account.lastName} {console.log(account)}
+          </li>
         ))}
       </ul>
     </>

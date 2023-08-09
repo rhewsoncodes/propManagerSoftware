@@ -4,6 +4,7 @@ package propManageProject.accountService.controller;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import propManageProject.accountService.entity.AccountEntity;
 import propManageProject.accountService.entity.request.clients.CreateClientRequest;
 import propManageProject.accountService.entity.response.clients.GetClientsResponse;
 import propManageProject.accountService.logic.ClientService;
@@ -29,5 +30,10 @@ public class ClientController {
     @GetMapping("/get-tenants/{managerId}")
     public ResponseEntity<GetClientsResponse> getTenants(@PathVariable("managerId") String managerId){
         return clientService.getTenantsByManagerId(managerId);
+    }
+
+    @GetMapping("/{clientId}")
+    public ResponseEntity<AccountEntity> getClientById(@PathVariable("clientID") String clientId){
+        return clientService.getClientDetails(clientId);
     }
 }

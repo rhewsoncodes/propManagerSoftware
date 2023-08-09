@@ -5,6 +5,7 @@ import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.AllArgsConstructor;
+import org.apache.coyote.Response;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -47,6 +48,8 @@ public class AccountService {
                         .firstName(createAccountRequest.getFirstName())
                         .lastName((createAccountRequest.getLastName()))
                         .accountType((createAccountRequest.getAccountType()))
+                        .phoneNumber(createAccountRequest.getPhoneNumber())
+                        .dob(createAccountRequest.getDob())
                         .build();
                 accountRepository.save(account);
                 var jwtToken = jwtService.generateToken(account);
@@ -110,7 +113,7 @@ public class AccountService {
     public ResponseEntity<AuthenticationResponse> refreshToken(
             String refreshToken, HttpServletRequest request, HttpServletResponse response
     ) {
-        final String username;
+        String username;
         username = jwtService.extractUsername(refreshToken);
         if (username != null) {
             var userDetails = accountRepository.findAccountByUsername(username).orElseThrow();
@@ -120,12 +123,40 @@ public class AccountService {
                         .builder()
                         .accessToken(accessToken)
                         .role(userDetails.getAccountType())
+                        .user_id(userDetails.getUuid())
                         .build();
                 return ResponseEntity.ok().header(HttpHeaders.SET_COOKIE, refreshToken).body(authenticationResponse);
             }
         }
         return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
 
+    }
+
+    public ResponseEntity<String> logout(
+            String refreshToken, HttpServletRequest request, HttpServletResponse response
+    ){
+        try {
+            if (refreshToken == null) {
+                return ResponseEntity.ok("User not logged in");
+            }
+
+            AccountEntity account = accountRepository.findAccountEntityByRefreshToken(refreshToken).get();
+
+            if (account == null) {
+                return ResponseEntity.ok().build();
+            }
+
+            account.setRefreshToken("");
+            accountRepository.save(account);
+            Cookie deleteRefreshTokenCookie = new Cookie("refreshToken", null);
+            deleteRefreshTokenCookie.setMaxAge(0);
+            response.addCookie(deleteRefreshTokenCookie);
+
+            return ResponseEntity.ok("User logged out");
+        } catch (Exception e){
+            e.printStackTrace();
+            return ResponseEntity.internalServerError().build();
+        }
     }
 
 }

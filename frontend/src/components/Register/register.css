@@ -24,6 +24,8 @@ a:visited {
 
 input[type="text"],
 input[type="password"],
+input[type="dob"],
+input[type="tel"],
 button,
 select,
 textarea {

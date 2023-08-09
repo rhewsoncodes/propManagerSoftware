@@ -11,6 +11,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -26,7 +27,8 @@ public class AccountEntity implements UserDetails {
     @GeneratedValue(strategy = GenerationType.UUID)
     @UuidGenerator
     private UUID uuid;
-    private String username, password, email, firstName, lastName, accountType, refreshToken;
+    private String username, password, email, firstName, lastName, phoneNumber, accountType, refreshToken;
+    private Date dob;
     private UUID managerId;
     private boolean enabled;
 

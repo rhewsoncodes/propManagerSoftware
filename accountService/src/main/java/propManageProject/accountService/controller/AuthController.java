@@ -37,6 +37,11 @@ public class AuthController {
         return accountService.refreshToken(refreshToken, request, response);
     }
 
+    @GetMapping("/logout")
+    public ResponseEntity<String> logout(@CookieValue("refreshToken") String refreshToken, HttpServletRequest request, HttpServletResponse response){
+        return accountService.logout(refreshToken, request, response);
+    }
+
 
 
 }

@@ -1,6 +1,6 @@
 import React from "react";
 
-const CreateClientLastNameField = ({ lastName, setLastName }) => {
+const LastNameFormField = ({ lastName, setLastName }) => {
   return (
     <>
       <label id="lastname" htmlFor="last_name">
@@ -18,4 +18,4 @@ const CreateClientLastNameField = ({ lastName, setLastName }) => {
   );
 };
 
-export default CreateClientLastNameField;
+export default LastNameFormField;

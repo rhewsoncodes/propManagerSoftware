@@ -17,7 +17,7 @@ public class EmailService {
 
     public void sendSimpleMessage(SendEmailRequest sendEmailRequest){
         SimpleMailMessage message = new SimpleMailMessage();
-        message.setFrom("propertmanagementsoftwareproj@gmail.com");
+        message.setFrom("propertymanagementsoftwareproj@gmail.com");
         message.setTo("robertdhewson1@gmail.com"); //dummy emails because i am using the freebee SES
         message.setSubject(sendEmailRequest.getSubject());
         message.setText(sendEmailRequest.getBody());

@@ -6,9 +6,11 @@ import ManagerHome from "./components/ManagerHome/ManagerHome";
 import NotFound from "./components/NotFound";
 import Layout from "./components/Layout";
 import RequireAuth from "./components/RequireAuth";
+import PersistLogin from "./components/PersistLogin";
 import Unauthorized from "./components/Unauthorized";
 import CreateClientForm from "./components/CreateClientForm/CreateClientForm";
 import ClientList from "./components/ClientList/ClientList";
+import AddProperty from "./components/AddProperty/AddProperty";
 
 function App() {
   return (
@@ -18,14 +20,23 @@ function App() {
         <Route path="register" element={<Register />} />
         <Route path="unauthorized" element={<Unauthorized />} />
 
-        <Route element={<RequireAuth allowedRole="Manager" />}>
-          <Route path="/" element={<ManagerHome />} />
-          <Route path="/create-client" element={<CreateClientForm />} />
-          <Route path="/list-owners" element={<ClientList type={"owners"} />} />
-          <Route
-            path="/list-tenants"
-            element={<ClientList type={"tenants"} />}
-          />
+        <Route element={<PersistLogin />}>
+          <Route element={<RequireAuth allowedRole="Manager" />}>
+            <Route path="/" element={<ManagerHome />} />
+            <Route path="/create-client" element={<CreateClientForm />} />
+            <Route
+              path="/list-owners"
+              element={<ClientList type={"owners"} />}
+            />
+            <Route
+              path="/list-tenants"
+              element={<ClientList type={"tenants"} />}
+            />
+            <Route
+              path="/add-property"
+              element={<AddProperty type={"owners"} />}
+            />
+          </Route>
         </Route>
 
         <Route path="*" element={<NotFound />} />

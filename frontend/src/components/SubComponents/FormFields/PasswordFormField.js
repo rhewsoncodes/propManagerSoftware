@@ -6,7 +6,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-const RegisterPasswordField = ({
+const PasswordFormField = ({
   password,
   setPassword,
   validPassword,
@@ -61,4 +61,4 @@ const RegisterPasswordField = ({
   );
 };
 
-export default RegisterPasswordField;
+export default PasswordFormField;

@@ -1,6 +1,6 @@
 import React from "react";
 
-const CreateClientAccountTypeField = ({ accountType, setAccountType }) => {
+const AccountTypeFormField = ({ accountType, setAccountType }) => {
   return (
     <>
       <label>Account Type:</label>
@@ -17,4 +17,4 @@ const CreateClientAccountTypeField = ({ accountType, setAccountType }) => {
   );
 };
 
-export default CreateClientAccountTypeField;
+export default AccountTypeFormField;

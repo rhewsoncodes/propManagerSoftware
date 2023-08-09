@@ -1,6 +1,6 @@
 import React from "react";
 
-const CreateClientFirstNameField = ({ firstName, setFirstName, userRef }) => {
+const FirstNameFormField = ({ firstName, setFirstName, userRef }) => {
   return (
     <>
       <label id="firstname" htmlFor="first_name">
@@ -10,10 +10,11 @@ const CreateClientFirstNameField = ({ firstName, setFirstName, userRef }) => {
         type="text"
         id="first_name"
         ref={userRef}
+        value={firstName}
         onChange={(e) => setFirstName(e.target.value)}
         required
       />
     </>
   );
 };
-export default CreateClientFirstNameField;
+export default FirstNameFormField;

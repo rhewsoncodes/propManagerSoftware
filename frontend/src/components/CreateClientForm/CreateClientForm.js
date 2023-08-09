@@ -3,14 +3,15 @@ import React, { useEffect, useState, useRef } from "react";
 import "./createClientForm.css";
 
 import useAuth from "../../hooks/useAuth";
-import CreateClientFirstNameField from "./subcomponents/CreateClientFirstNameField";
-import CreateClientLastNameField from "./subcomponents/CreateClientLastNameField";
-import CreateClientEmailField from "./subcomponents/CreateClientEmailField";
-import CreateClientConfirmEmailField from "./subcomponents/CreateClientConfirmEmailField";
-import CreateClientDateOfBirthField from "./subcomponents/CreateClientDateOfBirthField";
 import useAccountServicePrivate from "../../hooks/useAccountServicePrivate";
 import { useNavigate } from "react-router-dom";
-import CreateClientAccountTypeField from "./subcomponents/CreateClientAccountTypeField";
+import FirstNameFormField from "../SubComponents/FormFields/FirstNameFormField";
+import LastNameFormField from "../SubComponents/FormFields/LastNameFormField";
+import EmailFormField from "../SubComponents/FormFields/EmailFormField";
+import ConfirmEmailFormField from "../SubComponents/FormFields/ConfirmEmailFormField";
+import DateOfBirthFormField from "../SubComponents/FormFields/DateOfBirthFormField";
+import AccountTypeFormField from "../SubComponents/FormFields/AccountTypeFormField";
+import PhoneNumberField from "../SubComponents/FormFields/PhoneNumberField";
 
 const CreateClientForm = () => {
   const userRef = useRef();
@@ -33,6 +34,8 @@ const CreateClientForm = () => {
   const [confirmEmailFocus, setConfirmEmailFocus] = useState(false);
 
   const [dob, setDob] = useState(null);
+
+  const [phoneNumber, setPhoneNumber] = useState("");
 
   const [accountType, setAccountType] = useState("Owner");
 
@@ -64,6 +67,7 @@ const CreateClientForm = () => {
       lastName,
       email,
       dob,
+      phoneNumber,
       accountType,
       managerId,
     };
@@ -99,16 +103,13 @@ const CreateClientForm = () => {
         </p>
         <h1>Create Client Account</h1>
         <form onSubmit={handleSubmit}>
-          <CreateClientFirstNameField
+          <FirstNameFormField
             firstName={firstName}
             setFirstName={setFirstName}
             userRef={userRef}
           />
-          <CreateClientLastNameField
-            lastName={lastName}
-            setLastName={setLastName}
-          />
-          <CreateClientEmailField
+          <LastNameFormField lastName={lastName} setLastName={setLastName} />
+          <EmailFormField
             email={email}
             setEmail={setEmail}
             validEmail={validEmail}
@@ -116,7 +117,7 @@ const CreateClientForm = () => {
             emailFocus={emailFocus}
             setEmailFocus={setEmailFocus}
           />
-          <CreateClientConfirmEmailField
+          <ConfirmEmailFormField
             confirmEmail={confirmEmail}
             setConfirmEmail={setConfirmEmail}
             confirmEmailMatch={confirmEmailMatch}
@@ -124,8 +125,12 @@ const CreateClientForm = () => {
             confirmEmailFocus={confirmEmailFocus}
             setConfirmEmailFocus={setConfirmEmailFocus}
           />
-          <CreateClientDateOfBirthField dob={dob} setDob={setDob} />
-          <CreateClientAccountTypeField
+          <DateOfBirthFormField dob={dob} setDob={setDob} />
+          <PhoneNumberField
+            phoneNumber={phoneNumber}
+            setPhoneNumber={setPhoneNumber}
+          />
+          <AccountTypeFormField
             accountType={accountType}
             setAccountType={setAccountType}
           />

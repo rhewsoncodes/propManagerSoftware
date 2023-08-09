@@ -6,7 +6,7 @@ import "./login.css";
 import { useNavigate, useLocation, Link } from "react-router-dom";
 
 const Login = () => {
-  const { setAuth } = useAuth();
+  const { setAuth, persist, setPersist } = useAuth();
   const userRef = useRef();
   const errRef = useRef();
 
@@ -31,6 +31,14 @@ const Login = () => {
     setError("");
   }, [success]);
 
+  useEffect(() => {
+    localStorage.setItem("persist", persist);
+  }, [persist]);
+
+  const togglePersist = () => {
+    setPersist((prev) => !prev);
+  };
+
   const handleSubmit = async (e) => {
     try {
       e.preventDefault();
@@ -42,12 +50,10 @@ const Login = () => {
           withCredentials: true,
         }
       );
+      console.log(response);
       const accessToken = response?.data?.accessToken;
       const role = response?.data?.role;
       const loggedInUserId = response?.data?.user_id;
-      if (accessToken) {
-        localStorage.setItem("accessToken", accessToken);
-      }
       setAuth({ role, accessToken, loggedInUserId });
       console.log("SETTING AUTH WITH ", {
         role,
@@ -101,6 +107,15 @@ const Login = () => {
           required
         />
         <button>Log in</button>
+        <div className="persistCheck">
+          <input
+            type="checkbox"
+            id="persist"
+            onChange={togglePersist}
+            checked={persist}
+          />
+          <label htmlFor="persist">Trust This Device</label>
+        </div>
       </form>
     </loginsection>
   );

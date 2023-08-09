@@ -7,7 +7,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-const CreateClientEmailField = ({
+const EmailFormField = ({
   email,
   setEmail,
   validEmail,
@@ -58,4 +58,4 @@ const CreateClientEmailField = ({
   );
 };
 
-export default CreateClientEmailField;
+export default EmailFormField;

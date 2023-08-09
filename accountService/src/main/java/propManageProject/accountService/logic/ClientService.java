@@ -13,6 +13,7 @@ import propManageProject.accountService.entity.request.emails.SendEmailRequest;
 import propManageProject.accountService.entity.response.clients.GetClientsResponse;
 import propManageProject.accountService.repository.AccountRepository;
 
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -36,7 +37,7 @@ public class ClientService {
         try {
             String username = request.getFirstName().charAt(0) + request.getLastName();
             String password = Integer.toString(request.getDob().getMonth()) + request.getLastName() + Integer.toString(request.getDob().getYear());
-            password = password.replace(" ","_");
+            password = password.replace(" ","_"); //Completely insecure password "randomization" I wouldn't do this in production its just not my current focus
             String encodedPassword = passwordEncoder.encode(password);
             boolean uniqueEmail = accountRepository.findAccountByEmail(request.getEmail()).isEmpty();
 
@@ -55,11 +56,13 @@ public class ClientService {
                         .lastName(request.getLastName())
                         .accountType(request.getAccountType())
                         .managerId(request.getManagerId())
+                        .phoneNumber(request.getPhoneNumber())
+                        .dob(request.getDob())
                         .build();
                 accountRepository.save(user);
 
                 SendEmailRequest sendEmailRequest = SendEmailRequest.builder().subject("Your account has been created")
-                        .body("Your username is " + username + "Your password is" + password)
+                        .body("Your username is " + username + " Your password is " + password)
                         .recipient(request.getEmail())
                                 .build();
 
@@ -75,6 +78,21 @@ public class ClientService {
         }
     }
 
+
+    public ResponseEntity<AccountEntity> getClientDetails(String clientId){
+        try {
+            UUID clientUUID = UUID.fromString(clientId);
+            Optional<AccountEntity> client = accountRepository.findAccountEntityByUuid(clientUUID);
+            if (client == null) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+            } else {
+                return ResponseEntity.ok(client.get());
+            }
+        } catch (Exception err){
+            err.printStackTrace();
+            return ResponseEntity.internalServerError().build();
+        }
+    }
 
     public ResponseEntity<GetClientsResponse> getOwnersByManagerId (String managerId){
         UUID managerUUID = UUID.fromString(managerId);
