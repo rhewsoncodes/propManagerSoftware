@@ -6,13 +6,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import propManageProject.accountService.entity.AccountEntity;
 import propManageProject.accountService.entity.request.clients.CreateClientRequest;
+import propManageProject.accountService.entity.request.clients.EditClientRequest;
 import propManageProject.accountService.entity.response.clients.GetClientsResponse;
 import propManageProject.accountService.logic.ClientService;
 
 @RestController
 @AllArgsConstructor
 @RequestMapping("/client")
-@CrossOrigin
 public class ClientController {
 
     private ClientService clientService;
@@ -22,8 +22,25 @@ public class ClientController {
         return clientService.createClientAccount(request);
     }
 
+    @GetMapping("/get-client/{clientId}")
+    public ResponseEntity<AccountEntity> getClientDetails(@PathVariable("clientId") String clientId){
+        System.out.println(clientId);
+        return clientService.getClientDetails(clientId);
+    }
+
+    @PatchMapping("/edit-client")
+    public ResponseEntity<String> editClientDetails(@RequestBody EditClientRequest request){
+        return clientService.editClientDetails(request);
+    }
+
+    @DeleteMapping("/delete-client/{clientId}")
+    public ResponseEntity<String> deleteClient(@PathVariable("clientId") String clientId){
+        return clientService.deleteClient(clientId);
+    }
+
     @GetMapping("/get-owners/{managerId}")
     public ResponseEntity<GetClientsResponse> getOwners(@PathVariable("managerId") String managerId){
+        System.out.println("COMPLETED");
         return clientService.getOwnersByManagerId(managerId);
     }
 
@@ -32,8 +49,5 @@ public class ClientController {
         return clientService.getTenantsByManagerId(managerId);
     }
 
-    @GetMapping("/{clientId}")
-    public ResponseEntity<AccountEntity> getClientById(@PathVariable("clientID") String clientId){
-        return clientService.getClientDetails(clientId);
-    }
+
 }

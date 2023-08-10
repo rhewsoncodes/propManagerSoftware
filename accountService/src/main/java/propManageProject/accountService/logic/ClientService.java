@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import propManageProject.accountService.entity.AccountEntity;
 import propManageProject.accountService.entity.request.clients.CreateClientRequest;
+import propManageProject.accountService.entity.request.clients.EditClientRequest;
 import propManageProject.accountService.entity.request.emails.SendEmailRequest;
 import propManageProject.accountService.entity.response.clients.GetClientsResponse;
 import propManageProject.accountService.repository.AccountRepository;
@@ -87,6 +88,44 @@ public class ClientService {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
             } else {
                 return ResponseEntity.ok(client.get());
+            }
+        } catch (Exception err){
+            err.printStackTrace();
+            return ResponseEntity.internalServerError().build();
+        }
+    }
+
+    public ResponseEntity<String> editClientDetails(EditClientRequest request){
+        try {
+            System.out.println(request);
+            UUID clientUUID = UUID.fromString(request.getClientId());
+            Optional<AccountEntity> optionalClient = accountRepository.findAccountEntityByUuid(clientUUID);
+            if (optionalClient == null) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+            } else {
+                AccountEntity client = optionalClient.get();
+                client.setEmail(request.getEmail());
+                client.setFirstName(request.getFirstName());
+                client.setLastName(request.getLastName());
+                client.setPhoneNumber(request.getPhoneNumber());
+                accountRepository.save(client);
+                return ResponseEntity.ok("Client details changed.");
+            }
+        } catch (Exception err){
+            err.printStackTrace();
+            return ResponseEntity.internalServerError().build();
+        }
+    }
+
+    public ResponseEntity<String> deleteClient(String clientId){
+        try{
+            UUID clientUUID = UUID.fromString(clientId);
+            Optional<AccountEntity> optionalClient =accountRepository.findAccountEntityByUuid(clientUUID);
+            if(optionalClient == null){
+                return ResponseEntity.ok("Client not there to delete.");
+            } else {
+                accountRepository.deleteAccountEntityByUuid(clientUUID);
+                return ResponseEntity.ok("Client deleted.");
             }
         } catch (Exception err){
             err.printStackTrace();

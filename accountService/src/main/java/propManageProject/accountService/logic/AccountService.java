@@ -113,22 +113,27 @@ public class AccountService {
     public ResponseEntity<AuthenticationResponse> refreshToken(
             String refreshToken, HttpServletRequest request, HttpServletResponse response
     ) {
-        String username;
-        username = jwtService.extractUsername(refreshToken);
-        if (username != null) {
-            var userDetails = accountRepository.findAccountByUsername(username).orElseThrow();
-            if (jwtService.isTokenValid(refreshToken, userDetails)) {
-                var accessToken = jwtService.generateToken(userDetails);
-                AuthenticationResponse authenticationResponse = AuthenticationResponse
-                        .builder()
-                        .accessToken(accessToken)
-                        .role(userDetails.getAccountType())
-                        .user_id(userDetails.getUuid())
-                        .build();
-                return ResponseEntity.ok().header(HttpHeaders.SET_COOKIE, refreshToken).body(authenticationResponse);
+        try {
+            String username;
+            username = jwtService.extractUsername(refreshToken);
+            if (username != null) {
+                var userDetails = accountRepository.findAccountByUsername(username).orElseThrow();
+                if (jwtService.isTokenValid(refreshToken, userDetails)) {
+                    var accessToken = jwtService.generateToken(userDetails);
+                    AuthenticationResponse authenticationResponse = AuthenticationResponse
+                            .builder()
+                            .accessToken(accessToken)
+                            .role(userDetails.getAccountType())
+                            .user_id(userDetails.getUuid())
+                            .build();
+                    return ResponseEntity.ok().header(HttpHeaders.SET_COOKIE, refreshToken).body(authenticationResponse);
+                }
             }
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+        } catch (Exception e){
+            e.printStackTrace();
+            return ResponseEntity.internalServerError().build();
         }
-        return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
 
     }
 
