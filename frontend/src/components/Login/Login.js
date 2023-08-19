@@ -77,7 +77,7 @@ const Login = () => {
     }
   };
   return (
-    <loginsection>
+    <section>
       <p
         ref={errRef}
         className={error ? "errmsg" : "offscreen"}
@@ -117,7 +117,7 @@ const Login = () => {
           <label htmlFor="persist">Trust This Device</label>
         </div>
       </form>
-    </loginsection>
+    </section>
   );
 };
 

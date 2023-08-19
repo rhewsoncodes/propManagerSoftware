@@ -38,6 +38,7 @@ const EmailFormField = ({
         type="text"
         id="email"
         onChange={(e) => setEmail(e.target.value)}
+        value={email}
         required
         aria-invalid={validEmail ? "false" : "true"}
         aria-describedby="emailnote"

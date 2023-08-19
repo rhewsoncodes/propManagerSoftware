@@ -10,6 +10,7 @@ const LastNameFormField = ({ lastName, setLastName }) => {
         type="text"
         id="last_name"
         onChange={(e) => setLastName(e.target.value)}
+        value={lastName}
         required
         aria-invalid={lastName ? "false" : "true"}
         aria-describedby="lastname"

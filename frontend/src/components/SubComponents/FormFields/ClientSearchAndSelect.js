@@ -32,6 +32,10 @@ const ClientSearchAndSelect = ({ clients, type, client, setClient }) => {
             ...baseStyles,
             color: "black",
           }),
+          control: (baseStyles) => ({
+            ...baseStyles,
+            width: 350,
+          }),
         }}
       />
     </>

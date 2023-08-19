@@ -11,6 +11,9 @@ import Unauthorized from "./components/Unauthorized";
 import CreateClientForm from "./components/CreateClientForm/CreateClientForm";
 import ClientList from "./components/ClientList/ClientList";
 import AddProperty from "./components/AddProperty/AddProperty";
+import EditClientForm from "./components/EditClientForm/EditClientForm";
+import PropertyList from "./components/PropertyList/PropertyList";
+import EditPropertyForm from "./components/EditPropertyForm/EditPropertyForm";
 
 function App() {
   return (
@@ -35,6 +38,17 @@ function App() {
             <Route
               path="/add-property"
               element={<AddProperty type={"owners"} />}
+            />
+            <Route
+              exact
+              path="/edit-client/:clientId"
+              element={<EditClientForm />}
+            />
+            <Route path="/property-list" element={<PropertyList />} />
+            <Route
+              exact
+              path="/edit-property/:propertyId"
+              element={<EditPropertyForm />}
             />
           </Route>
         </Route>

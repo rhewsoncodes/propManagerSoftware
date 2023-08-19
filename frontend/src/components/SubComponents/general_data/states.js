@@ -1,18 +1,14 @@
-const states = [
+const state_data = [
   { value: "AL", select: "Alabama" },
   { value: "AK", select: "Alaska" },
-  { value: "AS", select: "American Samoa" },
   { value: "AZ", select: "Arizona" },
   { value: "AR", select: "Arkansas" },
   { value: "CA", select: "California" },
   { value: "CO", select: "Colorado" },
   { value: "CT", select: "Connecticut" },
   { value: "DE", select: "Delaware" },
-  { value: "DC", select: "District Of Columbia" },
-  { value: "FM", select: "Federated States Of Micronesia" },
   { value: "FL", select: "Florida" },
   { value: "GA", select: "Georgia" },
-  { value: "GU", select: "Guam" },
   { value: "HI", select: "Hawaii" },
   { value: "ID", select: "Idaho" },
   { value: "IL", select: "Illinois" },
@@ -22,7 +18,6 @@ const states = [
   { value: "KY", select: "Kentucky" },
   { value: "LA", select: "Louisiana" },
   { value: "ME", select: "Maine" },
-  { value: "MH", select: "Marshall Islands" },
   { value: "MD", select: "Maryland" },
   { value: "MA", select: "Massachusetts" },
   { value: "MI", select: "Michigan" },
@@ -38,13 +33,10 @@ const states = [
   { value: "NY", select: "New York" },
   { value: "NC", select: "North Carolina" },
   { value: "ND", select: "North Dakota" },
-  { value: "MP", select: "Northern Mariana Islands" },
   { value: "OH", select: "Ohio" },
   { value: "OK", select: "Oklahoma" },
   { value: "OR", select: "Oregon" },
-  { value: "PW", select: "Palau" },
   { value: "PA", select: "Pennsylvania" },
-  { value: "PR", select: "Puerto Rico" },
   { value: "RI", select: "Rhode Island" },
   { value: "SC", select: "South Carolina" },
   { value: "SD", select: "South Dakota" },
@@ -52,7 +44,6 @@ const states = [
   { value: "TX", select: "Texas" },
   { value: "UT", select: "Utah" },
   { value: "VT", select: "Vermont" },
-  { value: "VI", select: "Virgin Islands" },
   { value: "VA", select: "Virginia" },
   { value: "WA", select: "Washington" },
   { value: "WV", select: "West Virginia" },
@@ -60,4 +51,4 @@ const states = [
   { value: "WY", select: "Wyoming" },
 ];
 
-export default states;
+export default state_data;

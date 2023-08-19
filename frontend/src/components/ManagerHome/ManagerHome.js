@@ -29,6 +29,8 @@ const ManagerHome = () => {
       <Link to="/list-tenants">Tenant List</Link>
       <h> </h>
       <Link to="/add-property">Add Property</Link>
+      <h> </h>
+      <Link to="/property-list">Property List</Link>
       <button onClick={signOut}>Sign out</button>
     </div>
   );

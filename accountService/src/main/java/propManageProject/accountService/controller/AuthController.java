@@ -10,6 +10,7 @@ import propManageProject.accountService.entity.request.authentication.Authentica
 import propManageProject.accountService.entity.request.authentication.CreateAccountRequest;
 import propManageProject.accountService.entity.response.authentication.AuthenticationResponse;
 import propManageProject.accountService.logic.AccountService;
+import propManageProject.accountService.logic.JwtService;
 
 
 @RestController
@@ -17,8 +18,8 @@ import propManageProject.accountService.logic.AccountService;
 @RequestMapping("/auth")
 @CrossOrigin
 public class AuthController {
-    @Autowired
     private AccountService accountService;
+    private JwtService jwtService;
 
     @PostMapping("/createAccount")
     public ResponseEntity<AuthenticationResponse> createAccount(@RequestBody CreateAccountRequest request, HttpServletResponse response){
@@ -35,6 +36,11 @@ public class AuthController {
                                                                HttpServletRequest request,
                                                                HttpServletResponse response){
         return accountService.refreshToken(refreshToken, request, response);
+    }
+
+    @GetMapping("/validate-token/{token}")
+    public ResponseEntity<Boolean> validateToken(@PathVariable("token") String token, String username){
+        return jwtService.isTokenValidForGateway(token, username);
     }
 
     @GetMapping("/logout")

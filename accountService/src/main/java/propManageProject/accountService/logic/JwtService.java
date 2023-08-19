@@ -4,6 +4,9 @@ import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import io.jsonwebtoken.Claims;
@@ -69,6 +72,16 @@ public class JwtService {
     public boolean isTokenValid(String token, UserDetails userDetails) {
         final String username = extractUsername(token);
         return (username.equals(userDetails.getUsername())) && !isTokenExpired(token);
+    }
+
+    public ResponseEntity<Boolean> isTokenValidForGateway(String token, String username) {
+        boolean answer = username.equals(extractUsername(token)) && !isTokenExpired(token);
+        if (answer == true){
+            return ResponseEntity.ok(true);
+        } else {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(false);
+        }
+
     }
 
     private boolean isTokenExpired(String token) {
