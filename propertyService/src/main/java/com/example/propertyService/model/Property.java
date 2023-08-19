@@ -24,4 +24,5 @@ public class Property {
     private UUID uuid;
     private String ownerId, managerId, address, city, state, zip;
     private int propertyType;
+    private boolean rented;
 }

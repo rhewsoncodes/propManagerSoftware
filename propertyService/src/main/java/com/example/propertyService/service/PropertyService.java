@@ -33,6 +33,7 @@ public class PropertyService {
                     .state(request.getState())
                     .zip(request.getZip())
                     .propertyType(request.getPropertyType())
+                    .rented(false)
                     .build();
 
             propertyRepository.save(newProperty);
