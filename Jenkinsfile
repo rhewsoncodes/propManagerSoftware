@@ -8,6 +8,8 @@ pipeline {
             steps{
                 checkout scmGit(branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/rhewsoncodes/propManagerSoftware']])
                 sh 'ls'
+                sh 'cd propertyService'
+                sh 'mvn clean install'
             }
         }
     }
