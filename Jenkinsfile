@@ -11,6 +11,18 @@ pipeline {
                     #!/bin/bash
                     cd propertyService
                     mvn clean install
+                    cd ../
+                    cd accountService
+                    mvn clean install
+                    cd ../
+                    cd emailService
+                    mvn clean install
+                    cd ../
+                    cd discoveryserver
+                    mvn clean install
+                    cd ../ 
+                    cd gateway
+                    mvn clean install
                 '''
             }
         }
