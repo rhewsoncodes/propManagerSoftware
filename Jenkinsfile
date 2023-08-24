@@ -7,9 +7,11 @@ pipeline {
         stage("Build Maven"){
             steps{
                 checkout scmGit(branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/rhewsoncodes/propManagerSoftware']])
-                bash 'ls'
-                bash 'cd propertyService'
-                bash 'ls'
+                sh script:'''
+                    #!/bin/bash
+                    cd propertyService
+                    mvn clean install
+                '''
             }
         }
     }
