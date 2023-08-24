@@ -10,19 +10,19 @@ pipeline {
                 sh script:'''
                     #!/bin/bash
                     cd propertyService
-                    mvn clean install
+                    mvn clean package
                     cd ../
                     cd accountService
-                    mvn clean install
+                    mvn clean package
                     cd ../
                     cd emailService
-                    mvn clean install
+                    mvn clean package
                     cd ../
                     cd discoveryserver
-                    mvn clean install
+                    mvn clean package
                     cd ../ 
                     cd gateway
-                    mvn clean install
+                    mvn clean package
                 '''
             }
         }
