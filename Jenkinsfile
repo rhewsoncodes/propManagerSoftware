@@ -6,7 +6,7 @@ pipeline {
 
 
     stages{
-        stage("Build Maven"){
+        stage("Email Service"){
             environment {
                 EMAIL_DB_URL = "jdbc:postgresql://44.206.244.64:5400/emailDB"
                 EMAIL_SERVICE_PORT = 8081
@@ -22,6 +22,8 @@ pipeline {
                     echo "Email db url is ${EMAIL_DB_URL}"
                     cd emailService
                     mvn clean package
+                    docker build -t email_service .
+                    docker run -d --name=email_service -p 8081:8081 getting-started
                 '''
             }
         }
