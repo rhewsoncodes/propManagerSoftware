@@ -21,7 +21,7 @@ pipeline {
                 checkout scmGit(branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/rhewsoncodes/propManagerSoftware']])
                 sh script:'''
                     #!/bin/bash
-                    echo ${EMAIL_DB_URL}
+                    echo "Email db url is ${EMAIL_DB_URL}"
                     cd emailService
                     mvn clean package
                 '''
