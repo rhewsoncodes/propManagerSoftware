@@ -6,6 +6,18 @@ pipeline {
 
 
     stages{
+        stage("Discovery Server"){
+            steps{
+            checkout scmGit(branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/rhewsoncodes/propManagerSoftware']])
+            sh script:'''
+                #!/bin/bash
+                cd discoveryserver
+                mvn clean package
+                docker build -t discover_server .
+                docker run -d --name=discovery_server -p 8761:8761 discovery_server
+            '''
+            }
+        }
         stage("Email Service"){
             environment {
                 EMAIL_DB_URL = "jdbc:postgresql://44.206.244.64:5400/emailDB"
@@ -19,11 +31,10 @@ pipeline {
                 checkout scmGit(branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/rhewsoncodes/propManagerSoftware']])
                 sh script:'''
                     #!/bin/bash
-                    echo "Email db url is ${EMAIL_DB_URL}"
                     cd emailService
                     mvn clean package
                     docker build -t email_service .
-                    docker run -d --name=email_service -p 8081:8081 getting-started
+                    docker run -d --name=email_service -p 8081:8081 email_service
                 '''
             }
         }
