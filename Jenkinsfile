@@ -14,7 +14,6 @@ pipeline {
         CLOUD_AWS_ACCESS_KEY = credentials('AWS_ACCESS_KEY')
         CLOUD_AWS_SECRET_KEY = credentials('AWS_SECRET_KEY')
     }
-    }
     stages{
         stage("Build Maven"){
             steps{
@@ -29,3 +28,4 @@ pipeline {
         }
     }
 }
+    
