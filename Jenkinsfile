@@ -13,8 +13,8 @@ pipeline {
                 #!/bin/bash
                 cd discoveryserver
                 mvn clean package
-                docker build -t discover_server .
-                docker run -d --name=discovery_server -p 8761:8761 discovery_server
+                sudo docker build -t discover_server .
+                sudo docker run -d --name=discovery_server -p 8761:8761 discovery_server
             '''
             }
         }
